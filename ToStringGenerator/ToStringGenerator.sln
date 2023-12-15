@@ -5,6 +5,8 @@ VisualStudioVersion = 17.9.34407.89
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToStringGenerator", "ToStringGenerator\ToStringGenerator.csproj", "{848A5647-551B-4CD7-A10C-6730F6523515}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeAnalysisUtilities", "CodeAnalysisUtilities\CodeAnalysisUtilities.csproj", "{83EB359F-CB65-4E39-B983-64E3530FD5D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{848A5647-551B-4CD7-A10C-6730F6523515}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{848A5647-551B-4CD7-A10C-6730F6523515}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{848A5647-551B-4CD7-A10C-6730F6523515}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83EB359F-CB65-4E39-B983-64E3530FD5D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83EB359F-CB65-4E39-B983-64E3530FD5D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83EB359F-CB65-4E39-B983-64E3530FD5D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83EB359F-CB65-4E39-B983-64E3530FD5D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
