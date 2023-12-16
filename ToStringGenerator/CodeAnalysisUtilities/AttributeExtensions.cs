@@ -15,9 +15,15 @@ public static class AttributeExtensions {
 		return symbol
 			.GetAttributes()
 			.Any(attribute => symbol.Equals(attribute?.AttributeClass));
+
+		return symbol
+			.GetAttributes()
+			.Any(attributeData => string.Equals(
+				attributeData.AttributeClass?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
+				$"global::{typeof(TAttribute).Namespace}.{typeof(TAttribute).Name}"));
 	}
 
-	public static AttributeData GetAttribute<T>(this ISymbol symbol) where T : Attribute {
+	public static AttributeData GetAttribute<TAttribute>(this ISymbol symbol) where TAttribute : Attribute {
 
 		// todo see what sorts of debug messages we get when we pass in an improper type
 		//if (typeof(Attribute).IsAssignableFrom(attributeType)) {
@@ -25,7 +31,7 @@ public static class AttributeExtensions {
 		//}
 
 		// todo test this with generic attributes
-		return symbol.GetAttributes(typeof(T)).First();
+		return symbol.GetAttributes(typeof(TAttribute)).First();
 
 		//INamedTypeSymbol? attributeSymbol = classSymbol
 		//	.GetAttributes()
@@ -34,7 +40,7 @@ public static class AttributeExtensions {
 		//		attribute?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), GenerateToStringAttribute.Name));
 	}
 
-	public static INamedTypeSymbol GetAttributeSymbol<T>(this ISymbol symbol) where T : Attribute {
+	public static INamedTypeSymbol GetAttributeSymbol<TAttribute>(this ISymbol symbol) where TAttribute : Attribute {
 
 		// todo see what sorts of debug messages we get when we pass in an improper type
 		//if (typeof(Attribute).IsAssignableFrom(attributeType)) {
@@ -42,7 +48,7 @@ public static class AttributeExtensions {
 		//}
 
 		return symbol
-			.GetAttributes(typeof(T))
+			.GetAttributes(typeof(TAttribute))
 			.Select(attributeData => attributeData.AttributeClass ?? throw new("AttributeData.AttributeClass should not be null."))
 			.First();
 	}
