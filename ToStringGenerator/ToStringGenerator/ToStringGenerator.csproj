@@ -28,4 +28,8 @@
 		<None Include="../../LICENSE" Pack="true" PackagePath="" Visible="true" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\CodeAnalysisUtilities\CodeAnalysisUtilities.csproj" />
+	</ItemGroup>
+
 </Project>
