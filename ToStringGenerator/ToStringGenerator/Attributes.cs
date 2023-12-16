@@ -23,9 +23,7 @@ public class GenerateToStringAttribute : Attribute {
 		None                       = 0b00000,
 		Public                     = 0b00001,
 		Internal                   = 0b00010,
-		InternalAndMorePermissive  = 0b00011,
 		Protected                  = 0b00100,
-		ProtectedAndMorePermissive = 0b00111,
 		ProtectedInternal          = 0b01000,
 		Private                    = 0b10000,
 		All                        = 0b11111
