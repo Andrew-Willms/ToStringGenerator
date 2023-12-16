@@ -77,7 +77,7 @@ public class ToStringGenerator : IIncrementalGenerator {
 
 	private static string GenerateClassSource(INamedTypeSymbol classSymbol) {
 
-		// HasAttribute, GetAttribute, GetAttributes, GetGenericAttribute, GetGenericAttributes
+		// todo HasAttribute, GetAttribute, GetAttributes, create OpenGeneric class for generic types
 		INamedTypeSymbol? attributeSymbol = classSymbol
 			.GetAttributes()
 			.Select(attributeData => attributeData.AttributeClass)
