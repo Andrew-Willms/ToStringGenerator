@@ -77,12 +77,7 @@ public class ToStringGenerator : IIncrementalGenerator {
 
 	private static string GenerateClassSource(INamedTypeSymbol classSymbol) {
 
-		// todo HasAttribute, GetAttribute, GetAttributes, create OpenGeneric class for generic types
-		INamedTypeSymbol? attributeSymbol = classSymbol
-			.GetAttributes()
-			.Select(attributeData => attributeData.AttributeClass)
-			.First(attribute => string.Equals(
-				attribute?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), GenerateToStringAttribute.Name));
+		INamedTypeSymbol attributeSymbol = classSymbol.GetAttributeSymbol<GenerateToStringAttribute>();
 
 		string @namespace = classSymbol.ContainingNamespace is not null
 			? $"namespace {classSymbol.ContainingNamespace.ToDisplayString()};\r\n"
