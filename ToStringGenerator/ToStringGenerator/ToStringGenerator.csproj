@@ -30,6 +30,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\CodeAnalysisUtilities\CodeAnalysisUtilities.csproj" />
+	  <ProjectReference Include="..\LinqUtilities\LinqUtilities.csproj" />
 	</ItemGroup>
 
 </Project>
