@@ -21,4 +21,8 @@ public static class LinqExtensions {
 		return enumerable.Where(x => !predicate(x));
 	}
 
+	public static bool IsEmpty<T>(this IEnumerable<T> enumerable) {
+		return !enumerable.Any();
+	}
+
 }
