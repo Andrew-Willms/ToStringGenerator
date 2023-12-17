@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeAnalysisUtilities", "Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoughWork", "RoughWork\RoughWork.csproj", "{B2F0202F-CB0C-436D-99A7-7D0F357DC9FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqUtilities", "LinqUtilities\LinqUtilities.csproj", "{4D590C4B-4DBC-46D9-9F87-E832EF6FF396}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{B2F0202F-CB0C-436D-99A7-7D0F357DC9FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2F0202F-CB0C-436D-99A7-7D0F357DC9FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2F0202F-CB0C-436D-99A7-7D0F357DC9FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D590C4B-4DBC-46D9-9F87-E832EF6FF396}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D590C4B-4DBC-46D9-9F87-E832EF6FF396}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D590C4B-4DBC-46D9-9F87-E832EF6FF396}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D590C4B-4DBC-46D9-9F87-E832EF6FF396}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
