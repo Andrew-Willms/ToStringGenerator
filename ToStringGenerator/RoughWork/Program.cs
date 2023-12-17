@@ -35,7 +35,7 @@ public class Program {
 
 public record TestToStringType {
 
-	//public int Number { get; set; }
+	public int Number { get; set; }
 
 }
 
