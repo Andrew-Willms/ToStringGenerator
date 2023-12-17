@@ -13,7 +13,6 @@ namespace ToStringGenerator;
 
 
 
-// todo figure out if this works for file scoped types
 [Generator]
 public class ToStringGenerator : IIncrementalGenerator {
 
@@ -132,5 +131,6 @@ public class ToStringGenerator : IIncrementalGenerator {
 
 }
 
+// todo figure out if this works for file scoped types
 // todo check when INamedTypeSymbol.ContainingNamespace is null
 // todo check when the type isn't in a namespace
