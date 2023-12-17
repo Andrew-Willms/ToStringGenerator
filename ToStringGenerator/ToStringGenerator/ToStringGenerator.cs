@@ -4,6 +4,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using CodeAnalysisUtilities;
+using LinqUtilities;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -77,6 +78,7 @@ public class ToStringGenerator : IIncrementalGenerator {
 
 	private static string GenerateClassSource(INamedTypeSymbol classSymbol) {
 
+
 		INamedTypeSymbol attributeSymbol = classSymbol.GetAttributeSymbol<GenerateToStringAttribute>();
 
 		string @namespace = classSymbol.ContainingNamespace is not null
@@ -87,13 +89,16 @@ public class ToStringGenerator : IIncrementalGenerator {
 		int classNestingDepth = nestingHierarchy.Count;
 		string innerIndentation = new('\t', classNestingDepth);
 
-		string nestedClassOpening = ClassNesting.GenerateNestedClassOpening(nestingHierarchy);
-		string nestedClassClosing = ClassNesting.GenerateNestedClassClosing(nestingHierarchy);
+		string nestedClassOpening = ClassNesting.GenerateNestedClassOpening(classSymbol);
+		string nestedClassClosing = ClassNesting.GenerateNestedClassClosing(classSymbol);
 
-		IEnumerable<ISymbol> test = classSymbol
+		IEnumerable<ISymbol> membersToPrint = classSymbol
 			.GetMembers()
-			.Where(symbol => symbol.Kind == SymbolKind.Property)
-			.Where(symbol => symbol.DeclaredAccessibility == Accessibility.Private);
+			.Where(symbol => symbol.Kind is SymbolKind.Property or SymbolKind.Field or SymbolKind.Method)
+			.Exclude(symbol => symbol is IMethodSymbol { Parameters.Length: > 0 })
+			.Where(symbol => MemberMeetsInclusionRules(symbol, attributeSymbol));
+
+		string toStringLines = "";
 
 		return new StringBuilder(
 			$$"""
@@ -110,10 +115,19 @@ public class ToStringGenerator : IIncrementalGenerator {
 			  {{innerIndentation}}
 			  {{innerIndentation}}public override string ToString() {
 			  {{innerIndentation}}    
+			  {{innerIndentation}}    return "{{}}" +
+			  {{innerIndentation}}    
+			  {{innerIndentation}}    {{toStringLines}}
+			  {{innerIndentation}}    
 			  {{innerIndentation}}}
 			  {{innerIndentation}} 
 			  {{nestedClassClosing}}
 			  """).ToString();
+	}
+
+	private static bool MemberMeetsInclusionRules(ISymbol symbol, INamedTypeSymbol generateToStringAttributeSymbol) {
+
+		throw new NotImplementedException();
 	}
 
 }
