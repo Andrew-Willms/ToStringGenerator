@@ -8,10 +8,12 @@ public class Program {
 
 	public static void Main(params string[] args) {
 
-		string text = "2";
-		Console.WriteLine(text.Substring(1));
-		Console.WriteLine(text[1..]);
-		Console.WriteLine(text);
+		Console.WriteLine(new TestToStringType());
+
+		//string text = "2";
+		//Console.WriteLine(text.Substring(1));
+		//Console.WriteLine(text[1..]);
+		//Console.WriteLine(text);
 
 		//Console.WriteLine(typeof(GenericAttribute<int>).Namespace);
 		//Console.WriteLine(typeof(GenericAttribute<int>).Name);
@@ -31,6 +33,11 @@ public class Program {
 
 
 
+public record TestToStringType {
+
+	//public int Number { get; set; }
+
+}
 
 public class GenericAttribute<T> : Attribute {
 
