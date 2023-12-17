@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Microsoft.CodeAnalysis;
 
 namespace CodeAnalysisUtilities; 
@@ -31,21 +33,63 @@ public static class ClassNesting {
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <param name="nestingHierarchy"></param>
+	/// <param name="innerClass"></param>
+	/// <param name="initialIndentLevel"></param>
 	/// <returns></returns>
 	/// <exception cref="NotImplementedException"></exception>
-	public static string GenerateNestedClassOpening(IEnumerable<INamedTypeSymbol> nestingHierarchy) {
-		throw new NotImplementedException();
+	public static string GenerateNestedClassOpening(INamedTypeSymbol innerClass, int initialIndentLevel = 0) {
+
+		IEnumerable<INamedTypeSymbol> nestingHierarchy = innerClass.GetClassNesting();
+
+		StringBuilder stringBuilder = new();
+
+		int currentIndentationLevel = initialIndentLevel;
+
+		foreach (INamedTypeSymbol classSymbol in nestingHierarchy) {
+
+			string className = classSymbol.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
+
+			stringBuilder.Append('\t', currentIndentationLevel);
+			stringBuilder.Append("partial class ");
+			stringBuilder.Append(className);
+			stringBuilder.Append(" {\r\n");
+
+			currentIndentationLevel++;
+
+			stringBuilder.Append('\t', currentIndentationLevel);
+			stringBuilder.Append("/r/n");
+		}
+
+		return stringBuilder.ToString();
 	}
 
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <param name="nestingHierarchy"></param>
+	/// <param name="innerClass"></param>
+	/// <param name="initialIndentLevel"></param>
 	/// <returns></returns>
 	/// <exception cref="NotImplementedException"></exception>
-	public static string GenerateNestedClassClosing(IEnumerable<INamedTypeSymbol> nestingHierarchy) {
-		throw new NotImplementedException();
+	public static string GenerateNestedClassClosing(INamedTypeSymbol innerClass, int initialIndentLevel = 0) {
+
+		IEnumerable<INamedTypeSymbol> nestingHierarchy = innerClass.GetClassNesting();
+
+		StringBuilder stringBuilder = new();
+
+		int currentIndentationLevel = initialIndentLevel + nestingHierarchy.Count();
+
+		while (currentIndentationLevel > initialIndentLevel) {
+
+			stringBuilder.Append('\t', currentIndentationLevel);
+			stringBuilder.Append("/r/n");
+
+			currentIndentationLevel--;
+
+			stringBuilder.Append('\t', currentIndentationLevel);
+			stringBuilder.Append(" }\r\n");
+		}
+
+		return stringBuilder.ToString();
 	}
 
 }
