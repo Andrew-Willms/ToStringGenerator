@@ -25,6 +25,12 @@ public class GenerateToStringAttribute : Attribute {
 	/// </summary>
 	public bool IncludeNamespace { get; set; } = false;
 
+	// todo
+	/// <summary>
+	/// 
+	/// </summary>
+	public bool IncludeAssembly { get; set; } = false;
+
 	[Flags]
 	public enum AccessModifier {
 		None                       = 0b00000,
