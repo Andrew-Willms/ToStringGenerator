@@ -13,10 +13,17 @@ public class GenerateToStringAttribute : Attribute {
 	// todo this doesn't feel quite right but I will leave it for now
 	internal static readonly string Name = $"global::{typeof(GenerateToStringAttribute).FullName!}";
 
+	// todo
 	/// <summary>
 	/// 
 	/// </summary>
 	public bool MultiLine { get; set; } = false;
+
+	// todo
+	/// <summary>
+	/// 
+	/// </summary>
+	public bool IncludeNamespace { get; set; } = false;
 
 	[Flags]
 	public enum AccessModifier {
