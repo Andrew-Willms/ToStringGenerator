@@ -13,19 +13,19 @@ public class GenerateToStringAttribute : Attribute {
 	// todo this doesn't feel quite right but I will leave it for now
 	internal static readonly string Name = $"global::{typeof(GenerateToStringAttribute).FullName!}";
 
-	// todo
+	//todo add support
 	/// <summary>
 	/// 
 	/// </summary>
 	public bool MultiLine { get; set; } = false;
 
-	// todo
+	//todo add support
 	/// <summary>
 	/// 
 	/// </summary>
 	public bool IncludeNamespace { get; set; } = false;
 
-	// todo
+	//todo add support
 	/// <summary>
 	/// 
 	/// </summary>
@@ -82,6 +82,7 @@ public class IncludeInToStringAttribute : Attribute;
 
 
 
+//todo add support
 /// <summary>
 /// 
 /// </summary>
