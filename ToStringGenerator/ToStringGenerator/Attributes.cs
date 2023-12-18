@@ -31,36 +31,26 @@ public class GenerateToStringAttribute : Attribute {
 	/// </summary>
 	public bool IncludeAssembly { get; set; } = false;
 
-	[Flags]
-	public enum AccessModifier {
-		None                       = 0b00000,
-		Public                     = 0b00001,
-		Internal                   = 0b00010,
-		Protected                  = 0b00100,
-		ProtectedInternal          = 0b01000,
-		Private                    = 0b10000,
-		All                        = 0b11111
-	}
+	/// <summary>
+	/// 
+	/// </summary>
+	public AccessModifier PropertyPolicy { get; set; } = AccessModifier.Public;
 
 	/// <summary>
 	/// 
 	/// </summary>
-	public AccessModifier IncludeProperties { get; set; } = AccessModifier.Public;
+	public AccessModifier FieldPolicy { get; set; } = AccessModifier.Public;
+
+	// todo add support
+	/// <summary>
+	/// 
+	/// </summary>
+	public AccessModifier IncludeStaticMembersPolicy { get; set; } = AccessModifier.None;
 
 	/// <summary>
 	/// 
 	/// </summary>
-	public AccessModifier IncludeFields { get; set; } = AccessModifier.Public;
-
-	/// <summary>
-	/// 
-	/// </summary>
-	public AccessModifier IncludeStaticMembers { get; set; } = AccessModifier.None;
-
-	/// <summary>
-	/// 
-	/// </summary>
-	public AccessModifier IncludeParameterlessFunctions { get; set; } = AccessModifier.None;
+	public AccessModifier ParameterlessMethodPolicy { get; set; } = AccessModifier.None;
 
 }
 
@@ -74,6 +64,7 @@ public class ExcludeFromToStringAttribute : Attribute;
 
 
 
+// todo analyzer to ensure that this is only applied to parameterless methods
 /// <summary>
 /// 
 /// </summary>
@@ -82,7 +73,12 @@ public class IncludeInToStringAttribute : Attribute;
 
 
 
-//todo add support
+// todo add support for parametered methods, presumably the values have to be provided here
+public class IncludeParameteredMethodAttribute : Attribute;
+
+
+
+// todo ensure the type of the return type of the member matches the type parameter
 /// <summary>
 /// 
 /// </summary>
