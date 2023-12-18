@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace RoughWork;
 
@@ -7,6 +8,8 @@ namespace RoughWork;
 public class Program {
 
 	public static void Main(params string[] args) {
+
+		//throw new UnreachableException();
 
 		Console.WriteLine(new TestToStringType());
 
