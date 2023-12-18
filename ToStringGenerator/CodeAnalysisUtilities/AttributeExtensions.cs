@@ -10,11 +10,7 @@ namespace CodeAnalysisUtilities;
 
 public static class AttributeExtensions {
 
-	public static bool HasAttribute<TAttribute>(this ISymbol symbol) {
-
-		return symbol
-			.GetAttributes()
-			.Any(attribute => symbol.Equals(attribute?.AttributeClass));
+	public static bool HasAttribute<TAttribute>(this ISymbol symbol) where TAttribute : Attribute {
 
 		return symbol
 			.GetAttributes()
@@ -23,34 +19,73 @@ public static class AttributeExtensions {
 				$"global::{typeof(TAttribute).Namespace}.{typeof(TAttribute).Name}"));
 	}
 
-	public static AttributeData GetAttribute<TAttribute>(this ISymbol symbol) where TAttribute : Attribute {
+	public static bool HasAttribute(this ISymbol symbol, Type attributeType) {
 
-		// todo see what sorts of debug messages we get when we pass in an improper type
-		//if (typeof(Attribute).IsAssignableFrom(attributeType)) {
-		//	throw new ArgumentException("Must inherit from the Attribute class.", nameof(attributeType));
-		//}
-
-		// todo test this with generic attributes
-		return symbol.GetAttributes(typeof(TAttribute)).First();
-
-		//INamedTypeSymbol? attributeSymbol = classSymbol
-		//	.GetAttributes()
-		//	.Select(attributeData => attributeData.AttributeClass)
-		//	.First(attribute => string.Equals(
-		//		attribute?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), GenerateToStringAttribute.Name));
-	}
-
-	public static INamedTypeSymbol GetAttributeSymbol<TAttribute>(this ISymbol symbol) where TAttribute : Attribute {
-
-		// todo see what sorts of debug messages we get when we pass in an improper type
-		//if (typeof(Attribute).IsAssignableFrom(attributeType)) {
-		//	throw new ArgumentException("Must inherit from the Attribute class.", nameof(attributeType));
-		//}
+		if (typeof(Attribute).IsAssignableFrom(attributeType)) {
+			throw new ArgumentException("Must inherit from the Attribute class.", nameof(attributeType));
+		}
 
 		return symbol
-			.GetAttributes(typeof(TAttribute))
-			.Select(attributeData => attributeData.AttributeClass ?? throw new("AttributeData.AttributeClass should not be null."))
-			.First();
+			.GetAttributes()
+			.Any(attributeData => string.Equals(
+				attributeData.AttributeClass?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
+				$"global::{attributeType.Namespace}.{attributeType.Name}"));
+	}
+
+
+
+	public static AttributeData? GetAttribute<TAttribute>(this ISymbol symbol) where TAttribute : Attribute {
+
+		// todo check if this works with no namespace/a null namespace
+		return symbol
+			.GetAttributes()
+			.FirstOrDefault(attributeData => string.Equals(
+				attributeData.AttributeClass?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), 
+				$"global::{typeof(TAttribute).Namespace}.{typeof(TAttribute)}"));
+	}
+
+	// todo make analyzer to check and make sure attributeType inherits from Attribute
+	public static AttributeData? GetAttribute(this ISymbol symbol, Type attributeType) {
+
+		// todo see what sorts of debug messages we get when we pass in an improper type
+		if (typeof(Attribute).IsAssignableFrom(attributeType)) {
+			throw new ArgumentException("Must inherit from the Attribute class.", nameof(attributeType));
+		}
+
+		return symbol
+			.GetAttributes()
+			.FirstOrDefault(attributeData => string.Equals(
+				attributeData.AttributeClass?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
+				$"global::{attributeType.Namespace}.{attributeType.Name}"));
+	}
+
+
+
+	// todo figure out if this is desirable
+	public static INamedTypeSymbol? GetAttributeSymbol<TAttribute>(this ISymbol symbol) where TAttribute : Attribute {
+
+		return symbol.GetAttribute<TAttribute>()?.AttributeClass;
+	}
+
+	public static INamedTypeSymbol? GetAttributeSymbol(this ISymbol symbol, Type attributeType) {
+
+		if (typeof(Attribute).IsAssignableFrom(attributeType)) {
+			throw new ArgumentException("Must inherit from the Attribute class.", nameof(attributeType));
+		}
+
+		return symbol.GetAttribute(attributeType)?.AttributeClass;
+	}
+
+
+
+	public static ImmutableArray<AttributeData> GetAttributes<TAttribute>(this ISymbol symbol) where TAttribute : Attribute {
+
+		return symbol
+			.GetAttributes()
+			.Where(attributeData => string.Equals(
+				attributeData.AttributeClass?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
+				$"global::{typeof(TAttribute).Namespace}.{typeof(TAttribute).Name}"))
+			.ToImmutableArray();
 	}
 
 	public static ImmutableArray<AttributeData> GetAttributes(this ISymbol symbol, Type attributeType) {
@@ -61,44 +96,40 @@ public static class AttributeExtensions {
 
 		return symbol
 			.GetAttributes()
-			.Select(attributeData => attributeData.AttributeClass)
+			.Where(attributeData => string.Equals(
+				attributeData.AttributeClass?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
+				$"global::{attributeType.Namespace}.{attributeType.Name}"))
+			.ToImmutableArray();
 	}
 
-	// todo figure out if this is desirable
-	public static IEnumerable<INamedTypeSymbol> GetAttributeSymbols(this ISymbol symbol) {
+
+
+	public static IEnumerable<INamedTypeSymbol> GetAttributeSymbols<TAttribute>(this ISymbol symbol) where TAttribute : Attribute {
 
 		return symbol
-			.GetAttributes()
+			.GetAttributes<TAttribute>()
 			.Select(attributeData => 
 				attributeData.AttributeClass 
 				?? throw new InvalidOperationException("The AttributeClass was null. This should not happen."));
 	}
 
-	// todo GetGenericAttribute/HasGenericAttribute
+	public static IEnumerable<INamedTypeSymbol> GetAttributeSymbols(this ISymbol symbol, Type attributeType) {
 
-}
+		if (typeof(Attribute).IsAssignableFrom(attributeType)) {
+			throw new ArgumentException("Must inherit from the Attribute class.", nameof(attributeType));
+		}
 
-
-
-
-public class Test {
-
-
-	public static void TestMethod() {
-
-		ISymbol testSymbol = null!;
-
-		testSymbol.GetAttribute<TestAttribute<TestParentClass>>(typeof(object));
-
-
+		return symbol
+			.GetAttributes(attributeType)
+			.Select(attributeData =>
+				attributeData.AttributeClass
+				?? throw new InvalidOperationException("The AttributeClass was null. This should not happen."));
 	}
 
 
-}
 
-
-public abstract class TestParentClass;
-
-public class TestAttribute<T> : Attribute where T : TestParentClass {
+	public static TAttribute ToInstance<TAttribute>(this AttributeData attributeData) where TAttribute : Attribute {
+		throw new NotImplementedException();
+	}
 
 }
