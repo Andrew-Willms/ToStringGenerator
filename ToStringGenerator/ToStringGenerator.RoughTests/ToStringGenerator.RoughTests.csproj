@@ -12,4 +12,8 @@
 		<ProjectReference Include="..\ToStringGenerator\ToStringGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<None Include="../../LICENSE" Pack="true" PackagePath="" Visible="true" />
+	</ItemGroup>
+
 </Project>

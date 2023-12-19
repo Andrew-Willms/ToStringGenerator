@@ -17,4 +17,8 @@
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 	</PropertyGroup>
 
+	<ItemGroup>
+		<None Include="../../LICENSE" Pack="true" PackagePath="" Visible="true" />
+	</ItemGroup>
+
 </Project>
