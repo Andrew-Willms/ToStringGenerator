@@ -2,8 +2,9 @@
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
-		<Nullable>enable</Nullable>
 		<LangVersion>preview</LangVersion>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>disable</ImplicitUsings>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<IncludeContentInPack>true</IncludeContentInPack>
 	</PropertyGroup>

@@ -5,7 +5,7 @@ namespace RoughWork;
 
 
 
-public class Program {
+internal class Program {
 
 	public static void Main(params string[] args) {
 
