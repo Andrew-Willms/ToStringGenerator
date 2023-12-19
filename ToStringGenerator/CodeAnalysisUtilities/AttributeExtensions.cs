@@ -36,12 +36,22 @@ public static class AttributeExtensions {
 
 	public static AttributeData? GetAttribute<TAttribute>(this ISymbol symbol) where TAttribute : Attribute {
 
+		foreach (AttributeData attributeData in symbol.GetAttributes()) {
+
+			string? string1 = attributeData.AttributeClass?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+			string string2 = $"global::{typeof(TAttribute).Namespace}.{typeof(TAttribute).Name}";
+
+			if (string.Equals(string1, string2)) {
+				return attributeData;
+			}
+		}
+
 		// todo check if this works with no namespace/a null namespace
 		return symbol
 			.GetAttributes()
 			.FirstOrDefault(attributeData => string.Equals(
 				attributeData.AttributeClass?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), 
-				$"global::{typeof(TAttribute).Namespace}.{typeof(TAttribute)}"));
+				$"global::{typeof(TAttribute).Namespace}.{typeof(TAttribute).Name}"));
 	}
 
 	// todo make analyzer to check and make sure attributeType inherits from Attribute
