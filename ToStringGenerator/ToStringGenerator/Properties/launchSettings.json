@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ToStringGenerator - RoughTest": {
+      "commandName": "DebugRoslynComponent",
+      "targetProject": "..\\ToStringGenerator.RoughTests\\ToStringGenerator.RoughTests.csproj"
+    }
+  }
+}
