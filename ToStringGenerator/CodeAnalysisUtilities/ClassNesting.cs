@@ -57,7 +57,7 @@ public static class ClassNesting {
 			currentIndentationLevel++;
 
 			stringBuilder.Append('\t', currentIndentationLevel);
-			stringBuilder.Append("/r/n");
+			stringBuilder.Append("\r\n");
 		}
 
 		return stringBuilder.ToString();
@@ -81,7 +81,7 @@ public static class ClassNesting {
 		while (currentIndentationLevel > initialIndentLevel) {
 
 			stringBuilder.Append('\t', currentIndentationLevel);
-			stringBuilder.Append("/r/n");
+			stringBuilder.Append("\r\n");
 
 			currentIndentationLevel--;
 
