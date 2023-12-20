@@ -52,12 +52,15 @@ public static class ClassNesting {
 			stringBuilder.Append('\t', currentIndentationLevel);
 			stringBuilder.Append("partial class ");
 			stringBuilder.Append(className);
-			stringBuilder.Append(" {\r\n");
+			stringBuilder.Append(" {");
 
 			currentIndentationLevel++;
 
-			stringBuilder.Append('\t', currentIndentationLevel);
-			stringBuilder.Append("\r\n");
+			if (currentIndentationLevel < initialIndentLevel + nestingHierarchy.Count()) {
+				stringBuilder.Append("\r\n");
+				stringBuilder.Append('\t', currentIndentationLevel);
+				stringBuilder.Append("\r\n");
+			}
 		}
 
 		return stringBuilder.ToString();
@@ -80,13 +83,15 @@ public static class ClassNesting {
 
 		while (currentIndentationLevel > initialIndentLevel) {
 
-			stringBuilder.Append('\t', currentIndentationLevel);
-			stringBuilder.Append("\r\n");
-
 			currentIndentationLevel--;
 
 			stringBuilder.Append('\t', currentIndentationLevel);
-			stringBuilder.Append(" }\r\n");
+			stringBuilder.Append(" }");
+
+			if (currentIndentationLevel > initialIndentLevel) {
+				stringBuilder.Append("\r\n");
+				stringBuilder.Append('\t', currentIndentationLevel);
+			}
 		}
 
 		return stringBuilder.ToString();

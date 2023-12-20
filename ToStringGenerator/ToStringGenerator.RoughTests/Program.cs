@@ -19,7 +19,7 @@ internal class Program {
 
 
 [GenerateToString(PropertyPolicy = AccessModifier.All)]
-public class TestClass {
+public partial class TestClass {
 
 	public string TestString1 { get; set; } = "Hello World";
 
