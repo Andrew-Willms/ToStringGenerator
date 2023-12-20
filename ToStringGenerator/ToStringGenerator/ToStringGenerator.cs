@@ -108,7 +108,7 @@ public class ToStringGenerator : IIncrementalGenerator {
 
 			  #pragma warning disable 1591
 
-			  {{@namespace}};
+			  {{@namespace}}
 
 
 			  {{nestedClassOpening}}
@@ -123,9 +123,10 @@ public class ToStringGenerator : IIncrementalGenerator {
 			stringBuilder.Append(
 				$$"""
 				  {{innerIndentation}}
-				  {{innerIndentation}}    return "{{className}}" { +
-				  {{innerIndentation}}        {{toStringLines}} +
+				  {{innerIndentation}}    return "{{className}} {" +
+				  {{innerIndentation}}        {{toStringLines}}" +
 				  {{innerIndentation}}        " }";
+				  
 				  """);
 		}
 
@@ -157,6 +158,23 @@ public class ToStringGenerator : IIncrementalGenerator {
 			return true;
 		}
 
+		AccessModifier propertyPolicy = generateToStringAttribute.NamedArguments
+			.FirstOrDefault(x => x.Key == "PropertyPolicy").Value.Value as AccessModifier? ?? new GenerateToStringAttribute().PropertyPolicy;
+
+		AccessModifier fieldPolicy = generateToStringAttribute.NamedArguments
+			.FirstOrDefault(x => x.Key == "FieldPolicy").Value.Value as AccessModifier? ?? new GenerateToStringAttribute().FieldPolicy;
+
+		AccessModifier parameterlessMethodPolicy = generateToStringAttribute.NamedArguments
+			.FirstOrDefault(x => x.Key == "ParameterlessMethodPolicy").Value.Value as AccessModifier? ?? new GenerateToStringAttribute().ParameterlessMethodPolicy;
+
+		return symbol.Kind switch {
+			SymbolKind.Property => propertyPolicy.Includes(symbol.GetAccessModifier()),
+			SymbolKind.Field => fieldPolicy.Includes(symbol.GetAccessModifier()),
+			SymbolKind.Method => parameterlessMethodPolicy.Includes(symbol.GetAccessModifier()),
+			_ => throw new("Unreachable")
+		};
+
+		// todo implement .ToInstance or something similar because I think this way is cleaner
 		GenerateToStringAttribute attributeInstance = generateToStringAttribute.ToInstance<GenerateToStringAttribute>();
 
 		return symbol.Kind switch {
