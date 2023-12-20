@@ -9,6 +9,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\CodeAnalysisUtilities\CodeAnalysisUtilities.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
+		<ProjectReference Include="..\LinqUtilities\LinqUtilities.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
 		<ProjectReference Include="..\ToStringGenerator\ToStringGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
 	</ItemGroup>
 

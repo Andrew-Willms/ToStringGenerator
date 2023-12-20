@@ -8,6 +8,7 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<IncludeContentInPack>true</IncludeContentInPack>
 		<IsRoslynComponent>true</IsRoslynComponent>
+		<EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -21,15 +22,15 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<None Include="../../LICENSE" Pack="true" PackagePath="" Visible="true" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.8.0" PrivateAssets="all" />
 		<PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Include="../../LICENSE" Pack="true" PackagePath="" Visible="true" />
 	</ItemGroup>
 
 	<ItemGroup>
