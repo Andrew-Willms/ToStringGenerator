@@ -21,7 +21,7 @@ public static class AttributeExtensions {
 
 	public static bool HasAttribute(this ISymbol symbol, Type attributeType) {
 
-		if (typeof(Attribute).IsAssignableFrom(attributeType)) {
+		if (attributeType.IsAssignableFrom(typeof(Attribute))) {
 			throw new ArgumentException("Must inherit from the Attribute class.", nameof(attributeType));
 		}
 
@@ -58,7 +58,7 @@ public static class AttributeExtensions {
 	public static AttributeData? GetAttribute(this ISymbol symbol, Type attributeType) {
 
 		// todo see what sorts of debug messages we get when we pass in an improper type
-		if (typeof(Attribute).IsAssignableFrom(attributeType)) {
+		if (attributeType.IsAssignableFrom(typeof(Attribute))) {
 			throw new ArgumentException("Must inherit from the Attribute class.", nameof(attributeType));
 		}
 
@@ -79,7 +79,7 @@ public static class AttributeExtensions {
 
 	public static INamedTypeSymbol? GetAttributeSymbol(this ISymbol symbol, Type attributeType) {
 
-		if (typeof(Attribute).IsAssignableFrom(attributeType)) {
+		if (attributeType.IsAssignableFrom(typeof(Attribute))) {
 			throw new ArgumentException("Must inherit from the Attribute class.", nameof(attributeType));
 		}
 
@@ -100,7 +100,7 @@ public static class AttributeExtensions {
 
 	public static ImmutableArray<AttributeData> GetAttributes(this ISymbol symbol, Type attributeType) {
 
-		if (typeof(Attribute).IsAssignableFrom(attributeType)) {
+		if (attributeType.IsAssignableFrom(typeof(Attribute))) {
 			throw new ArgumentException("Must inherit from the Attribute class.", nameof(attributeType));
 		}
 
@@ -125,7 +125,7 @@ public static class AttributeExtensions {
 
 	public static IEnumerable<INamedTypeSymbol> GetAttributeSymbols(this ISymbol symbol, Type attributeType) {
 
-		if (typeof(Attribute).IsAssignableFrom(attributeType)) {
+		if (attributeType.IsAssignableFrom(typeof(Attribute))) {
 			throw new ArgumentException("Must inherit from the Attribute class.", nameof(attributeType));
 		}
 
