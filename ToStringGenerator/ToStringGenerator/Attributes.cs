@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 
 namespace ToStringGenerator;
 
@@ -90,7 +91,7 @@ public class ToStringFormatAttribute<T> : Attribute {
 	/// 
 	/// </summary>
 	/// <param name="formatter"></param>
-	public ToStringFormatAttribute(Func<T, string> formatter) {
+	public ToStringFormatAttribute(string formatter) {
 
 	}
 

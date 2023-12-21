@@ -25,4 +25,7 @@ public partial class TestClass {
 
 	public string TestString2 { get; set; } = "Hello Other World";
 
+	[ToStringFormat<string>("{TestString3}!")]
+	public string TestString3 { get; set; } = "Yo dawg";
+
 }

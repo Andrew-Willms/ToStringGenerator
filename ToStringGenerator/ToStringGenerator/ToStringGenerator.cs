@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
-using CodeAnalysisUtilities;
-using LinqUtilities;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using CodeAnalysisUtilities;
+using LinqUtilities;
 
 namespace ToStringGenerator;
 
@@ -95,7 +95,7 @@ public class ToStringGenerator : IIncrementalGenerator {
 			.ToImmutableArray();
 
 		string toStringLines = membersToPrint
-			.Select(symbol => $"$\"{symbol.Name} = {{{CreateFormatter(symbol)}}}")
+			.Select(symbol => $"$\"{symbol.Name} = {CreateFormatter(symbol)}")
 			.Join($", \" +\r\n{innerIndentation}\t\t");
 
 		const char tab = '\t';
@@ -186,15 +186,14 @@ public class ToStringGenerator : IIncrementalGenerator {
 
 	private static string CreateFormatter(ISymbol symbol) {
 
+		// todo fix this, it is always null
 		AttributeData? formatterAttribute = symbol.GetAttribute(typeof(ToStringFormatAttribute<>));
 
 		if (formatterAttribute is null) {
-			return symbol.Name;
+			return $"{{{symbol.Name}}}";
 		}
 
-
-
-		throw new NotImplementedException();
+		return (formatterAttribute.ConstructorArguments.First().Value as string)!;
 	}
 
 }

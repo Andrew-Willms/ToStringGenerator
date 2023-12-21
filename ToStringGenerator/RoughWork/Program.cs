@@ -9,9 +9,12 @@ internal class Program {
 
 	public static void Main(params string[] args) {
 
+		Func<int, string> testFunction = number => $"Hi {number}";
+		Console.WriteLine(testFunction);
+
 		//throw new UnreachableException();
 
-		Console.WriteLine(new TestToStringType());
+		//Console.WriteLine(new TestToStringType());
 
 		//string text = "2";
 		//Console.WriteLine(text.Substring(1));
