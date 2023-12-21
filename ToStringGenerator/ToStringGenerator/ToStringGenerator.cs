@@ -58,24 +58,19 @@ public class ToStringGenerator : IIncrementalGenerator {
 			.Where(x => x is not null)
 			.Select(x => (INamedTypeSymbol)x!);
 
-		List<string> fileNames = new();
-
 		foreach (INamedTypeSymbol typeSymbol in distinctClasses) {
 
-			string classSource = GenerateClassSource(typeSymbol);
-
-			string fileName = $"{typeSymbol.ContainingNamespace}_{typeSymbol.Name}";
-			int fileNumber = 0;
-
-			while (fileNames.Contains(fileName + fileNumber)) {
-				fileNumber++;
-			}
-
-			fileName += fileNumber;
-
-			fileNames.Add(fileName);
-			context.AddSource($"{fileName}.g.cs", classSource);
+			context.AddSource(NameGeneratedFile(typeSymbol), GenerateClassSource(typeSymbol));
 		}
+	}
+
+	private static string NameGeneratedFile(INamedTypeSymbol typeSymbol) {
+
+		int typeParameterCount = typeSymbol.TypeParameters.Length;
+
+		return typeParameterCount == 0
+			? $"{typeSymbol.ContainingNamespace}.{typeSymbol.Name}_ToString.g.cs"
+			: $"{typeSymbol.ContainingNamespace}.{typeSymbol.Name}`{typeParameterCount}_ToString.g.cs";
 	}
 
 	private static string GenerateClassSource(INamedTypeSymbol classSymbol) {
